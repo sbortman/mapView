@@ -101,11 +101,59 @@
             <br/>
             <fieldset>
                 <legend>Bands</legend>
-                <select name="colorModel" id="colorModel" onchange="chgBands()">
+                <input type="hidden" id="bands" name="bands" value="default"/>
+                <select name="colorModel" id="colorModel" onchange="bandsChanged()">
                     <option value="Default">Default</option>
                     <option value="Color">Color</option>
                     <option value="Gray">Gray</option>
                 </select>
+                <table id="displayGunTable">
+                    <tr id="redRow">
+                        <td style="text-align:right;"><label id='band0'>Red</label></td>
+                        <td style="text-align:left;">
+                            <select name="redBand" onchange="bandsChanged()" id="redBand">
+                                <option value="0" selected="selected">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="greenRow">
+                        <td style="text-align:right;">Green</td>
+                        <td style="text-align:left;">
+                            <select name="greenBand" onchange="bandsChanged()" id="greenBand">
+                                <option value="0">0</option>
+                                <option value="1" selected="selected">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="blueRow">
+                        <td style="text-align:right;">Blue</td>
+                        <td style="text-align:left;">
+                            <select name="blueBand" onchange="bandsChanged()" id="blueBand">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2" selected="selected">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </fieldset>
         </div>
     </div>
@@ -266,20 +314,60 @@
 //        }
     }
 
-    function chgBands()
+    function bandsChanged()
     {
-        var colorModel = $( "#colorModel" ).val();
-        var obj = {colorModel: colorModel};
+        var colorModel = $( '#colorModel' ).val();
+
+        if ( colorModel === 'Default' )
+        {
+            $( '#displayGunTable' ).css( 'display', 'none' );
+
+            $( '#redRow' ).css( 'display', 'none' );
+            $( '#greenRow' ).css( 'display', 'none' );
+            $( '#blueRow' ).css( 'display', 'none' );
+
+            $( '#bands' ).val( 'default' );
+        }
+        else if ( colorModel === 'Gray' )
+        {
+            $( '#displayGunTable' ).css( 'display', 'block' );
+
+            $( '#redRow' ).css( 'display', 'block' );
+            $( '#greenRow' ).css( 'display', 'none' );
+            $( '#blueRow' ).css( 'display', 'none' );
+
+            $( '#band0' ).html( "Band" );
+
+            $( '#bands' ).val( $( '#redBand' ).val() );
+        }
+        else if ( colorModel === 'Color' )
+        {
+            $( '#displayGunTable' ).css( 'display', 'block' );
+
+            $( '#redRow' ).css( 'display', 'block' );
+            $( '#greenRow' ).css( 'display', 'block' );
+            $( '#blueRow' ).css( 'display', 'block' );
+
+            $( '#band0' ).html( "Red" );
+
+            $( '#bands' ).val( [
+                $( '#redBand' ).val(),
+                $( '#greenBand' ).val(),
+                $( '#blueBand' ).val()
+            ].join( ',' ) );
+        }
+
+        var obj = {bands: $( '#bands' ).val()};
 
         console.log( obj );
 
-//        wcsParams.setProperties(obj);
-//
-//        for(var layer in rasterLayers)
-//        {
-//            rasterLayers[layer].mergeNewParams(obj);
-//        }
+        //changeBandsOpts();
     }
+
+    $( '#displayGunTable' ).css( 'display', 'none' );
+    $( '#redRow' ).css( 'display', 'none' );
+    $( '#greenRow' ).css( 'display', 'none' );
+    $( '#blueRow' ).css( 'display', 'none' );
 
 
 </script>
