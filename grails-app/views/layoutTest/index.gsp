@@ -57,7 +57,7 @@
         <div>
             <fieldset>
                 <legend>Interpolation</legend>
-                <select id="interpolation" name="interpolation">
+                <select id="interpolation" name="interpolation" onchange="chgInterpolation()">
                     <option value="bilinear" selected="selected">bilinear</option>
                     <option value="nearest neighbor">nearest neighbor</option>
                     <option value="cubic">cubic</option>
@@ -73,7 +73,7 @@
             <br/>
             <fieldset>
                 <legend>Sharpen</legend>
-                <select id="sharpen_mode" name="sharpen_mode">
+                <select id="sharpen_mode" name="sharpen_mode" onchange="chgSharpenMode()">
                     <option value="none" selected="selected">None</option>
                     <option value="light">Light</option>
                     <option value="heavy">Heavy</option>
@@ -82,7 +82,7 @@
             <br/>
             <fieldset>
                 <legend>Dynamic Range Adjustment</legend>
-                <select id="stretch_mode" name="stretch_mode">
+                <select id="stretch_mode" name="stretch_mode" onchange="chgStretchMode()">
                     <option value="linear_auto_min_max" selected="selected">Automatic</option>
                     <option value="linear_1std_from_mean">1st Std</option>
                     <option value="linear_2std_from_mean">2nd Std</option>
@@ -93,7 +93,7 @@
             <br/>
             <fieldset>
                 <legend>Region</legend>
-                <select id="stretch_mode_region" name="stretch_mode_region">
+                <select id="stretch_mode_region" name="stretch_mode_region" onchange="chgStretchMode()">
                     <option value="global">Global</option>
                     <option value="viewport" selected="selected">Viewport</option>
                 </select>
@@ -101,7 +101,7 @@
             <br/>
             <fieldset>
                 <legend>Bands</legend>
-                <select name="colorModel" id="colorModel">
+                <select name="colorModel" id="colorModel" onchange="chgBands()">
                     <option value="Default">Default</option>
                     <option value="Color">Color</option>
                     <option value="Gray">Gray</option>
@@ -217,6 +217,71 @@
          } );
          */
     } );
+
+    function chgInterpolation()
+    {
+        var interpolation = $( "#interpolation" ).val();
+        var obj = {interpolation: interpolation};
+
+        //alert(obj.interpolation);
+
+        console.log( obj );
+
+        //wcsParams.setProperties(obj);
+
+//        for ( var layer in rasterLayers )
+//        {
+//            rasterLayers[layer].mergeNewParams( obj );
+//        }
+    }
+
+
+    function chgStretchMode()
+    {
+        var stretch_mode = $( "#stretch_mode" ).val();
+        var stretch_mode_region = $( "#stretch_mode_region" ).val();
+        var obj = {stretch_mode: stretch_mode, stretch_mode_region: stretch_mode_region};
+
+        console.log( obj );
+
+//        wcsParams.setProperties(obj);
+//        for(var layer in rasterLayers)
+//        {
+//            rasterLayers[layer].mergeNewParams(obj);
+//        }
+    }
+
+    function chgSharpenMode()
+    {
+        var sharpen_mode = $( "#sharpen_mode" ).val();
+        var obj = {sharpen_mode: sharpen_mode};
+
+        console.log( obj );
+
+//        wcsParams.setProperties(obj);
+//
+//        for(var layer in rasterLayers)
+//        {
+//            rasterLayers[layer].mergeNewParams(obj);
+//        }
+    }
+
+    function chgBands()
+    {
+        var colorModel = $( "#colorModel" ).val();
+        var obj = {colorModel: colorModel};
+
+        console.log( obj );
+
+//        wcsParams.setProperties(obj);
+//
+//        for(var layer in rasterLayers)
+//        {
+//            rasterLayers[layer].mergeNewParams(obj);
+//        }
+    }
+
+
 </script>
 
 <r:layoutResources/>
